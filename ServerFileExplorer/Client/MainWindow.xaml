@@ -1,0 +1,153 @@
+﻿<Window x:Class="Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        mc:Ignorable="d"
+        
+        Title="WPF-клиент"
+        Icon="Icons\favicon.ico"
+        MinHeight="400" MinWidth="750"
+        Height="500" Width="900" 
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Menu 
+            x:Name="MenuMain" 
+            Grid.Row="0" 
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center">
+            <MenuItem 
+                Header="Файл">
+                <MenuItem 
+                    Header="Выход" 
+                    Click="MenuMainExit_Click" />
+            </MenuItem>
+            <MenuItem
+                Header="Справка">
+                <MenuItem 
+                    x:Name="MenuItemAbout"
+                    Header="О программе..."
+                    Click="MenuItemAbout_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid 
+            x:Name="GridWorkSpace" 
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="27*"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid 
+                x:Name="DataGridMain"
+                Grid.Column="0"
+                Margin="0"
+                BorderBrush="#FF3E3E3E"
+                RowBackground="WhiteSmoke" 
+                AlternatingRowBackground="White" 
+                CanUserReorderColumns="True" 
+                CanUserResizeColumns="True" 
+                CanUserResizeRows="True"
+                AutoGenerateColumns="False" 
+                GridLinesVisibility="Vertical" 
+                SelectionUnit="FullRow" 
+                SelectionMode="Single" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                CanUserAddRows="False" 
+                CanUserDeleteRows="False"
+                MouseDoubleClick="DataGridMain_MouseDoubleClick" 
+                MouseLeftButtonUp="DataGridMain_MouseLeftButtonUp">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding FullName}" Header="Полный путь" Width="150" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Имя" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding CreationTime, StringFormat=g, ConverterCulture=ru-RU}" Header="Дата создания" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Extension}" Header="Тип" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Length}" Header="Размер (мегабайт)" Width="120" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <GridSplitter 
+                Grid.Column="1" 
+                Width="3" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" 
+                ShowsPreview="False"
+                ResizeDirection="Columns"
+                Background="#FF939393"/>
+
+            <TextBox
+                Grid.Column="2"
+                x:Name="TextBoxMain"
+                SpellCheck.IsEnabled="True" 
+                Language="ru-ru" 
+                Text="" 
+                IsReadOnly="False" 
+                FontSize="14" 
+                TextOptions.TextFormattingMode="Display" 
+                ScrollViewer.CanContentScroll="True" 
+                VerticalScrollBarVisibility="Auto" 
+                HorizontalScrollBarVisibility="Auto"/>
+        </Grid>
+
+        <StatusBar
+            Grid.Row="2"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <StatusBarItem
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Text="Серверное время: " />
+                    <TextBlock
+                        x:Name="textBlockTime"
+                        Text="00:00:00" />
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <TextBox 
+                        x:Name="TextBoxPath" 
+                        Height="20"
+                        Width="200"
+                        Text="D:\\"
+                        TextWrapping="NoWrap"/>
+                    <Button 
+                        x:Name="ButtonGetFileList"
+                        Content="Показать файлы" 
+                        Width="120"
+                        Height="20"
+                        Margin="20, 0, 0, 0"
+                        IsEnabled="True"
+                        Click="ButtonGetFileList_Click" />
+                    <Button 
+                        x:Name="ButtonBackPath"
+                        Content="Назад"
+                        Width="60"
+                        Height="20"
+                        Margin="20, 0, 20, 0"
+                        IsEnabled="False"
+                        Click="ButtonBackPath_Click"/>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
